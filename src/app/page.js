@@ -266,9 +266,14 @@ export default function Home() {
                 </div>
             </header>
 
-            <div className="marquee mt-8">
-                <div className="marquee-content">
-                    <span>🔥 100% PEDAS ASLI</span><span>🍝 MIE JEBEW GORONTALO</span><span>🛵 DELIVERY CEPAT</span><span>🌶️ BERANI COBA?</span><span>🔥 100% PEDAS ASLI</span><span>🍝 MIE JEBEW GORONTALO</span>
+            <div className="marquee overflow-hidden whitespace-nowrap w-full border-y-4 border-bvblack bg-bvyellow py-3 mt-8">
+                <div className="marquee-content inline-block animate-marquee">
+                    <span className="font-display text-2xl text-bvblack mr-12 uppercase">🔥 100% PEDAS ASLI</span>
+                    <span className="font-display text-2xl text-bvblack mr-12 uppercase">🍝 MIE JEBEW GORONTALO</span>
+                    <span className="font-display text-2xl text-bvblack mr-12 uppercase">🛵 DELIVERY CEPAT</span>
+                    <span className="font-display text-2xl text-bvblack mr-12 uppercase">🌶️ BERANI COBA?</span>
+                    <span className="font-display text-2xl text-bvblack mr-12 uppercase">🔥 100% PEDAS ASLI</span>
+                    <span className="font-display text-2xl text-bvblack mr-12 uppercase">🍝 MIE JEBEW GORONTALO</span>
                 </div>
             </div>
 

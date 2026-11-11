@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-/* 
-  Kustomisasi Tema (Menggantikan tailwind.config.js lama) 
-*/
 @theme {
   --color-bvred: #FF2A2A;
   --color-bvblack: #111111;
@@ -15,42 +12,25 @@
   --shadow-brutal: 6px 6px 0px 0px rgba(17,17,17,1);
   --shadow-brutal-lg: 10px 10px 0px 0px rgba(17,17,17,1);
   --shadow-brutal-hover: 2px 2px 0px 0px rgba(17,17,17,1);
+
+  /* Daftarkan animasi Marquee ke Tailwind */
+  --animate-marquee: marquee 15s linear infinite;
+  
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
 }
 
-/* Pengaturan Dasar Halaman */
+/* Pause Marquee ketika di-hover */
+.marquee:hover .animate-marquee {
+    animation-play-state: paused;
+}
+
 body {
   background-color: var(--color-bvcream);
 }
 
-/* Animasi Marquee ala Bavet */
-.marquee {
-  overflow: hidden;
-  white-space: nowrap;
-  width: 100%;
-  border-top: 4px solid var(--color-bvblack);
-  border-bottom: 4px solid var(--color-bvblack);
-  background-color: var(--color-bvyellow);
-  padding: 10px 0;
-}
-.marquee-content {
-  display: inline-block;
-  animation: marquee 15s linear infinite;
-  animation-play-state: paused;
-}
-.marquee-content span {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  color: var(--color-bvblack);
-  margin-right: 3rem;
-  text-transform: uppercase;
-}
-
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* Kustomisasi Scrollbar Keranjang */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
