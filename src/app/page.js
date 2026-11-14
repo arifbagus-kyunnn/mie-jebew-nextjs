@@ -211,7 +211,7 @@ export default function Home() {
                 
                 setTimeout(() => {
                     setCart([]);
-                    window.location.href = `https://wa.me/6285343631117?text=${encodeURIComponent(waText)}`;
+                    window.location.href = `https://wa.me/6287759388358?text=${encodeURIComponent(waText)}`;
                     setIsProcessing(false);
                 }, 1000);
             } else {

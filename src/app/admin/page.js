@@ -29,7 +29,12 @@ export default function AdminDashboard() {
     const formatWA = (nomor) => {
         if (!nomor) return '';
         let no = nomor.toString().replace(/\D/g, '');
-        if (no.startsWith('0')) return '62' + no.substring(1);
+        if (no.startsWith('0')) {
+        return '62' + no.substring(1);
+        }
+        if (no.startsWith('8')) {
+        return '62' + no;
+        }
         return no;
     };
 
