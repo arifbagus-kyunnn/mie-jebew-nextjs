@@ -26,6 +26,13 @@ export default function AdminDashboard() {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+    const formatWA = (nomor) => {
+        if (!nomor) return '';
+        let no = nomor.toString().replace(/\D/g, '');
+        if (no.startsWith('0')) return '62' + no.substring(1);
+        return no;
+    };
+
     // === 1. FUNGSI LOGIN & FETCH ===
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -265,11 +272,17 @@ export default function AdminDashboard() {
 
     const downloadCSV = () => {
         if (pesananLaporanFiltered.length === 0) { alert("Data kosong, tidak ada yang bisa diunduh."); return; }
-        let csvContent = "data:text/csv;charset=utf-8,Timestamp,Nama Pemesan,Alamat,Detail Pesanan,Kloter,Total Harga\r\n";
+        
+        // 1. Tambahkan header "No HP" di urutan CSV
+        let csvContent = "data:text/csv;charset=utf-8,Timestamp,Nama Pemesan,No HP,Alamat,Detail Pesanan,Kloter,Total Harga\r\n";
+        
         pesananLaporanFiltered.forEach(row => {
             const escapedAlamat = `"${(row.Alamat || "").replace(/"/g, '""')}"`;
             const escapedDetail = `"${(row.DetailPesanan || "").replace(/"/g, '""')}"`;
-            csvContent += `${row.Timestamp},${row.NamaPemesan},${escapedAlamat},${escapedDetail},${row.Kloter},${row.TotalHarga}\r\n`;
+            const noHpAman = row.NoHp ? `'${row.NoHp}` : '-'; 
+            
+            // 2. Sisipkan row.NoHp ke dalam baris data
+            csvContent += `${row.Timestamp},${row.NamaPemesan},${noHpAman},${escapedAlamat},${escapedDetail},${row.Kloter},${row.TotalHarga}\r\n`;
         });
         
         const namaBulanStr = filterBulan !== 'semua' ? `_Bulan-${filterBulan}` : '';
@@ -364,7 +377,13 @@ export default function AdminDashboard() {
                                     <div className="overflow-x-auto">
                                         <table className="w-full text-left font-bold text-sm whitespace-nowrap">
                                             <thead className="bg-bvcream border-b-4 border-bvblack uppercase">
-                                                <tr><th className="px-4 py-3">Nama</th><th className="px-4 py-3">Waktu</th><th className="px-4 py-3">Kloter</th><th className="px-4 py-3">Total</th></tr>
+                                                <tr>
+                                                    <th className="px-4 py-3">Nama</th>
+                                                    <th className="px-4 py-3">Waktu</th>
+                                                    <th className="px-4 py-3">Kloter</th>
+                                                    <th className="px-4 py-3">Total</th>
+                                                    <th className="px-4 py-3 text-center">Aksi</th> 
+                                                </tr>
                                             </thead>
                                             <tbody className="divide-y-2 divide-bvblack">
                                                 {obj.pesanan.map((p, i) => (
@@ -373,6 +392,16 @@ export default function AdminDashboard() {
                                                         <td className="px-4 py-3 text-gray-500">{p.jam}</td>
                                                         <td className="px-4 py-3"><span className="bg-bvred text-white px-2 border-2 border-bvblack">{p.Kloter}</span></td>
                                                         <td className="px-4 py-3 text-bvred">Rp{parseInt(p.TotalHarga || 0).toLocaleString('id-ID')}</td>
+                                                        <td className="px-4 py-3">
+                                                            <a
+                                                                href={`https://wa.me/${formatWA(p.NoHp)}?text=${encodeURIComponent(`Halo *${p.NamaPemesan}*, pesanan Mie Jebew kamu untuk *Kloter ${p.Kloter}* sudah kami terima dan sedang diproses. Mohon ditunggu ya! 🔥`)}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="bg-[#25D366] text-white font-bold border-2 border-bvblack px-3 py-1 shadow-[2px_2px_0_0_#111] hover:bg-green-600 transition-colors uppercase text-xs"
+                                                            >
+                                                                Chat WA
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                 ))}
                                             </tbody>

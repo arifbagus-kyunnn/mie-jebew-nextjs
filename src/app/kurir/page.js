@@ -12,6 +12,13 @@ export default function KurirDashboard() {
     const [pesananData, setPesananData] = useState([]);
     const [loadingData, setLoadingData] = useState(false);
 
+    const formatWA = (nomor) => {
+        if (!nomor) return '';
+        let no = nomor.toString().replace(/\D/g, '');
+        if (no.startsWith('0')) return '62' + no.substring(1);
+        return no;
+    };
+
     // === FUNGSI LOGIN & FETCH ===
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -144,7 +151,15 @@ export default function KurirDashboard() {
                                                     📦 Bawaan: {item.DetailPesanan}
                                                 </p>
                                             </div>
-                                            <div className="w-full md:w-auto flex flex-col gap-2 shrink-0">
+                                            <div className="w-full md:w-auto flex flex-col gap-3 shrink-0">
+                                                <a
+                                                     href={`https://wa.me/${formatWA(item.NoHp)}?text=${encodeURIComponent(`Halo *${item.NamaPemesan}*, saya kurir Mie Jebew. Pesanan kamu sedang dalam perjalanan ke alamat tujuan. Tolong pastikan titik maps sesuai dan standby ya! 🛵💨`)}`} 
+                                                    target="_blank" 
+                                                    rel="noopener noreferrer"
+                                                    className="bg-[#25D366] text-white border-4 border-bvblack px-6 py-4 font-display text-lg uppercase text-center shadow-[4px_4px_0_0_#111] hover:bg-green-600 transition-colors block w-full"
+                                                >
+                                                    KABARI PEMBELI 💬
+                                                </a>
                                                 <a 
                                                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.Alamat)}`} 
                                                     target="_blank" 

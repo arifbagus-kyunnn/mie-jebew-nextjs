@@ -9,6 +9,7 @@ export default function Home() {
 
     // Form Checkout States
     const [nama, setNama] = useState('');
+    const [noHp, setNoHp] = useState('');
     const [alamat, setAlamat] = useState('');
     const [kloter, setKloter] = useState('');
     const [statusPesan, setStatusPesan] = useState('');
@@ -197,7 +198,7 @@ export default function Home() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     action: 'checkout',
-                    nama, alamat, kloter, totalHarga: totalRupiah,
+                    nama, noHp, alamat, kloter, totalHarga: totalRupiah,
                     detailPesanan: detailStr, items: cart
                 })
             });
@@ -206,7 +207,7 @@ export default function Home() {
             if(data.result === 'success'){
                 setStatusPesan('Berhasil! Buka WhatsApp...');
                 const linkMaps = koordinat ? `\n📍 *Lokasi Maps:*\nhttps://www.google.com/maps/search/?api=1&query=${koordinat}` : '';
-                const waText = `Halo admin Mie Jebew, saya pesan:\n\nNama: ${nama}\nKloter: ${kloter}\nPesanan: ${detailStr}\nTotal: Rp${totalRupiah.toLocaleString('id-ID')}\n\n*Alamat:*\n${alamat}${linkMaps}`;
+                const waText = `Halo admin Mie Jebew, saya pesan:\n\nNama: ${nama}\nNo. HP: ${noHp}\nKloter: ${kloter}\nPesanan: ${detailStr}\nTotal: Rp${totalRupiah.toLocaleString('id-ID')}\n\n*Alamat:*\n${alamat}${linkMaps}`;
                 
                 setTimeout(() => {
                     setCart([]);
@@ -363,6 +364,17 @@ export default function Home() {
                                 <div>
                                     <label className="block text-xl font-display uppercase mb-2">SIAPA NAMA KAMU?</label>
                                     <input type="text" required placeholder="NAMA LENGKAP" value={nama} onChange={(e)=>setNama(e.target.value)} className="w-full bg-bvcream border-4 border-bvblack p-4 font-bold focus:bg-white focus:outline-none shadow-[4px_4px_0_0_#111]" />
+                                </div>
+                                <div>
+                                    <label className="block text-xl font-display uppercase mb-2">NOMOR WHATSAPP</label>
+                                    <input 
+                                        type="tel" 
+                                        required 
+                                        placeholder="CONTOH: 0853436..." 
+                                        value={noHp} 
+                                        onChange={(e)=>setNoHp(e.target.value)} 
+                                        className="w-full bg-bvcream border-4 border-bvblack p-4 font-bold focus:bg-white focus:outline-none shadow-[4px_4px_0_0_#111]" 
+                                    />
                                 </div>
                                 <div>
                                     <label className="block text-xl font-display uppercase mb-2">KIRIM KE MANA?</label>
